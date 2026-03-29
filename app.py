@@ -101,8 +101,7 @@ st.markdown("<h1 style='text-align: center; color: white;'>🍔 Food Bill Predic
 st.markdown("<p style='text-align: center; color: #ddd; font-size: 18px; margin-bottom: 25px;'>Know your order cost instantly</p>", unsafe_allow_html=True)
 
 # -------- GLASS CONTAINER WITH BORDER --------
-with st.container(border=True):
-    
+with st.container():
     c1, c2, c3 = st.columns(3)
 
     with c1:
