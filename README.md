@@ -49,6 +49,11 @@ This project consists of a full-stack data science workflow:
    streamlit run app.py
    ```
 
+## 🌐 Live Demo
+
+You can try the live version of this Food Bill Predictor here:  
+[🍔 Food Bill Predictor - Streamlit App](https://foodbillpredictor-iswacmkwjvpvwzlg9hyaga.streamlit.app/)
+
 ## 📊 Model Details
 The model was trained on a dataset containing 200 entries with 14 original columns. The preprocessing pipeline includes:
 - Handling missing values using mean/mode imputation.
