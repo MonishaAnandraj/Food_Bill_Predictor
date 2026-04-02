@@ -133,7 +133,7 @@ with st.container():
     with c6:
         gender = st.selectbox("🧑 Gender", ["Male", "Female"])
         weekend = st.selectbox("📅 Weekend", ["Yes", "No"])
-        num_orders = st.slider("📦 Orders", 0, 50, 5)
+        num_orders = st.slider("📦 Previous Orders", 0, 50, 5)
 
     predict_btn = st.button("🚀 Predict Bill")
 
@@ -151,9 +151,6 @@ if predict_btn:
     weekend_val = 1 if weekend == "Yes" else 0
     gender_val = 1 if gender == "Male" else 0
 
-    total_items_price = num_items * avg_price
-    discount_amount = total_items_price * (discount / 100)
-
     input_data = pd.DataFrame({
         'num_items': [num_items],
         'avg_item_price': [avg_price],
@@ -163,8 +160,6 @@ if predict_btn:
         'customer_age': [age],
         'weekend': [weekend_val],
         'num_previous_orders': [num_orders],
-        'total_items_price': [total_items_price],
-        'discount_amount': [discount_amount],
         'customer_gender': [gender_val]
     })
 
@@ -184,18 +179,6 @@ if predict_btn:
 
     prediction = model.predict(input_data)[0]
 
-    # -------- KPI --------
-    k1, k2, k3 = st.columns(3)
-
-    with k1:
-        st.markdown(f'<div class="kpi k1"><h4>Total</h4><h2>₹ {total_items_price}</h2></div>', unsafe_allow_html=True)
-
-    with k2:
-        st.markdown(f'<div class="kpi k2"><h4>Saved</h4><h2>₹ {round(discount_amount,2)}</h2></div>', unsafe_allow_html=True)
-
-    with k3:
-        st.markdown(f'<div class="kpi k3"><h4>Final</h4><h2>₹ {round(prediction,2)}</h2></div>', unsafe_allow_html=True)
-
     # -------- RESULT --------
     st.markdown(f"""
     <div class="result-box">
@@ -203,3 +186,40 @@ if predict_btn:
         <h1>₹ {round(prediction,2)}</h1>
     </div>
     """, unsafe_allow_html=True)
+    
+
+st.divider()
+st.subheader("🤖 Chat with Food Assistant")
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# Show chat history
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
+
+user_input = st.chat_input("Ask your food bill...")
+
+if user_input:
+    st.session_state.messages.append({"role": "user", "content": user_input})
+
+    # Simple extraction logic (basic version)
+    try:
+        if "item" in user_input.lower():
+            # Example default values (can improve later)
+            num_items_chat = num_items
+            avg_price_chat = avg_price
+            discount_chat = discount
+
+            total = num_items_chat * avg_price_chat
+            discount_amt = total * (discount_chat / 100)
+
+            response = f"Estimated bill is ₹{round(total - discount_amt,2)}"
+        else:
+            response = "Please mention items, price or discount 😊"
+
+    except:
+        response = "Sorry, couldn't understand. Try again."
+
+    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.chat_message("assistant").write(response)
