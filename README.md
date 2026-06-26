@@ -31,24 +31,6 @@ This project consists of a full-stack data science workflow:
 
 ```
 
-## ⚙️ Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/your-username/food-bill-predictor.git
-   cd food-bill-predictor
-   ```
-
-2. **Install dependencies:**
-   ```bash
-    pip install -r requirements.txt
-   ```
-
-3. **Run the Application:**
-   ```bash
-   streamlit run app.py
-   ```
-
 ## 🌐 Live Demo
 
 You can try the live version of this Food Bill Predictor here:  
